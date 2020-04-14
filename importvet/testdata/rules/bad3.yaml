@@ -1,0 +1,7 @@
+---
+rules:
+  - regexp: ^github.com/example/.+
+    action: flip
+    stop: true
+  - regexp: .+
+    action: deny

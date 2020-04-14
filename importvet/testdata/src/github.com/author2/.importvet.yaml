@@ -1,0 +1,15 @@
+---
+rules:
+  - regexp: ^github.com/author2/pkg
+    action: allow
+    stop: true
+  - regexp: ^github.com/author4/pkg
+    action: allow
+    stop: true
+  - regexp: ^(fmt|net)$
+    action: deny
+    stop: true
+  - regexp: .+
+    action: deny
+  - set: std
+    action: allow

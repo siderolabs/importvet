@@ -1,0 +1,21 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+package main
+
+import (
+	"log"
+
+	"golang.org/x/tools/go/analysis/singlechecker"
+
+	"github.com/talos-systems/importvet/importvet"
+)
+
+func main() {
+	if err := importvet.InitConfig("."); err != nil {
+		log.Fatal(err)
+	}
+
+	singlechecker.Main(importvet.Analyzer)
+}
