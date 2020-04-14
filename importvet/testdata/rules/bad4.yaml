@@ -1,0 +1,7 @@
+---
+rules:
+  - set: nonstd
+    action: allow
+    stop: true
+  - regexp: .+
+    action: deny

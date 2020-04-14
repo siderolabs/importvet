@@ -1,0 +1,7 @@
+---
+rules:
+  - regexp: ^github.com/example/.+
+    action: allow
+    stop: true
+  - regexp: ^$[ab
+    action: deny
