@@ -9,7 +9,7 @@ import (
 
 	"golang.org/x/tools/go/analysis/singlechecker"
 
-	"github.com/talos-systems/importvet/importvet"
+	"github.com/talos-systems/importvet/pkg/importvet"
 )
 
 func main() {

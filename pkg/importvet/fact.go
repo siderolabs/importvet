@@ -20,7 +20,6 @@ type importFact struct {
 func (fact *importFact) AFact() {}
 
 func (fact *importFact) Verify(pass *analysis.Pass, config *Config, rng analysis.Range, chain []string, verified map[string]struct{}) {
-
 	for pkg := range fact.Imports {
 		path := pkg.Path()
 
