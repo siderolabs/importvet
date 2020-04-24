@@ -108,7 +108,7 @@ unit-tests-race: ## Performs unit tests with race detection enabled.
 
 .PHONY: conformance
 conformance: ## Performs policy checks against the commit and source code.
-	docker run --rm -it -v $(PWD):/src -w /src docker.io/autonomy/conform:v0.1.0-alpha.19
+	docker run --rm -it -v $(PWD):/src -w /src docker.io/autonomy/conform:v0.1.0-alpha.19-5-g6e0c294
 
 .PHONY: login
 login: ## Logs in to the configured container registry.
