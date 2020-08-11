@@ -16,7 +16,7 @@ import (
 // Action is rule action (firewall style).
 type Action string
 
-// Defined actions
+// Defined actions.
 const (
 	ActionAllow = Action("allow")
 	ActionDeny  = Action("deny")
@@ -101,6 +101,7 @@ func (ruleset *RuleSet) Process(pkg *types.Package) Action {
 	for _, rule := range ruleset.Rules {
 		if rule.Matches(pkg) {
 			action = rule.Action
+
 			if rule.Stop {
 				break
 			}

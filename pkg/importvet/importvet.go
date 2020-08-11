@@ -26,7 +26,7 @@ var Analyzer = &analysis.Analyzer{
 
 var configTree *ConfigTree
 
-// InitConfig should be called to initialize configs for the import restrictions
+// InitConfig should be called to initialize configs for the import restrictions.
 func InitConfig(rootPath string) (err error) {
 	configTree, err = NewConfigTree(rootPath)
 
@@ -45,6 +45,7 @@ func run(pass *analysis.Pass) (interface{}, error) {
 		pos := pass.Fset.Position(f.Package)
 		if pos.IsValid() {
 			packagePath = filepath.Dir(pos.Filename)
+
 			break
 		}
 	}
@@ -111,5 +112,6 @@ func imported(info *types.Info, spec *ast.ImportSpec) *types.Package {
 	if !ok {
 		obj = info.Defs[spec.Name] // renaming import
 	}
+
 	return obj.(*types.PkgName).Imported()
 }
