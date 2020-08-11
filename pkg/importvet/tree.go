@@ -23,6 +23,7 @@ func NewConfigTree(rootPath string) (*ConfigTree, error) {
 	cfgTree.configTrie = trie.NewPathTrie()
 
 	var err error
+
 	rootPath, err = filepath.Abs(rootPath)
 	if err != nil {
 		return nil, err
@@ -60,7 +61,7 @@ func (cfgTree *ConfigTree) Match(path string) ([]*Config, error) {
 	var configs []*Config
 
 	err := cfgTree.configTrie.WalkPath(path, func(key string, value interface{}) error {
-		configs = append(configs, value.(*Config)) //nolint: errcheck
+		configs = append(configs, value.(*Config))
 
 		return nil
 	})

@@ -1,10 +1,10 @@
-*
-!api
-!cmd
-!hack
-!internal
+# THIS FILE WAS AUTOMATICALLY GENERATED, PLEASE DO NOT EDIT.
+#
+# Generated on 2020-08-11T16:05:04Z by kres dbf2a57-dirty.
+
+**
 !pkg
+!cmd
 !go.mod
 !go.sum
-!*.go
-!README.md
+!.golangci.yml
