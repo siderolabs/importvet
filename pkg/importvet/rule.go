@@ -23,6 +23,8 @@ const (
 )
 
 // Rule represents single import restriction rule.
+//
+//nolint:govet
 type Rule struct {
 	// Regexp is regular expression against the import path.
 	Regexp string `yaml:"regexp"`
@@ -124,6 +126,7 @@ func (ruleset *RuleSet) Validate() error {
 
 // Config is YAML representation of the config.
 type Config struct {
+	Path    string `yaml:"-"`
 	RuleSet `yaml:",inline"`
 }
 
@@ -134,9 +137,11 @@ func LoadConfig(path string) (*Config, error) {
 		return nil, err
 	}
 
-	defer f.Close() //nolint: error
+	defer f.Close() //nolint:errcheck
 
-	cfg := Config{}
+	cfg := Config{
+		Path: path,
+	}
 
 	if err = yaml.NewDecoder(f).Decode(&cfg); err != nil {
 		return nil, fmt.Errorf("error processing config file %q: %w", path, err)

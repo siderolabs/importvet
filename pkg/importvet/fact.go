@@ -19,7 +19,7 @@ type importFact struct {
 
 func (fact *importFact) AFact() {}
 
-func (fact *importFact) Verify(pass *analysis.Pass, config *Config, rng analysis.Range, chain []string, verified map[string]struct{}) {
+func (fact *importFact) Verify(pass *analysis.Pass, configs []*Config, rng analysis.Range, chain []string, verified map[string]struct{}) {
 	for pkg := range fact.Imports {
 		path := pkg.Path()
 
@@ -29,14 +29,16 @@ func (fact *importFact) Verify(pass *analysis.Pass, config *Config, rng analysis
 
 		verified[path] = struct{}{}
 
-		if config.Process(pkg) == ActionDeny {
-			pass.ReportRangef(rng, "import path %v is denied by config (via chain %s)", path, strings.Join(chain, " -> "))
+		for _, config := range configs {
+			if config.Process(pkg) == ActionDeny {
+				pass.ReportRangef(rng, "import path %v is denied by config (via chain %s)", path, strings.Join(chain, " -> "))
+			}
 		}
 
 		var innerFact importFact
 
 		if pass.ImportPackageFact(pkg, &innerFact) {
-			innerFact.Verify(pass, config, rng, append(chain, pkg.Path()), verified)
+			innerFact.Verify(pass, configs, rng, append(chain, pkg.Path()), verified)
 		}
 	}
 }

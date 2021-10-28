@@ -1,5 +1,7 @@
 # importvet
 
+<!-- markdownlint-disable MD046 -->
+
 `importvet` is a Go linter which verifies that import paths in Go packages
 conform with the supplied specification.
 

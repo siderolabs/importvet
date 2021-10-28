@@ -60,17 +60,6 @@ func run(pass *analysis.Pass) (interface{}, error) {
 		return nil, err
 	}
 
-	if len(configs) > 1 {
-		return nil, fmt.Errorf("conflicting import restriction configs found for %q", packagePath)
-	}
-
-	var config *Config
-
-	// if no config is defined, rules are not applied, but facts are still collected
-	if len(configs) == 1 {
-		config = configs[0]
-	}
-
 	fact := importFact{Imports: map[*types.Package]struct{}{}}
 
 	verified := map[string]struct{}{}
@@ -79,9 +68,9 @@ func run(pass *analysis.Pass) (interface{}, error) {
 		for _, imp := range f.Imports {
 			pkg := imported(pass.TypesInfo, imp)
 
-			if config != nil {
+			for _, config := range configs {
 				if config.Process(pkg) == ActionDeny {
-					pass.ReportRangef(imp, "import path %v is denied by config", imp.Path.Value)
+					pass.ReportRangef(imp, "import path %v is denied by config %s", imp.Path.Value, config.Path)
 				}
 			}
 
@@ -93,8 +82,8 @@ func run(pass *analysis.Pass) (interface{}, error) {
 				fact.Imports[pkg] = struct{}{}
 
 				var otherFact importFact
-				if config != nil && pass.ImportPackageFact(pkg, &otherFact) {
-					otherFact.Verify(pass, config, imp, []string{path}, verified)
+				if len(configs) > 0 && pass.ImportPackageFact(pkg, &otherFact) {
+					otherFact.Verify(pass, configs, imp, []string{path}, verified)
 				}
 			}
 		}
