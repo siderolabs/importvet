@@ -1,6 +1,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED, PLEASE DO NOT EDIT.
 #
-# Generated on 2021-10-28T16:15:29Z by kres b8587b7.
+# Generated on 2022-03-31T15:34:50Z by kres ff0aee3-dirty.
 
 # options for analysis running
 run:
@@ -132,6 +132,7 @@ linters:
     - tagliatelle
     - thelper
     - typecheck
+    - varnamelen
     - wrapcheck
     # abandoned linters for which golangci shows the warning that the repo is archived by the owner
     - interfacer
