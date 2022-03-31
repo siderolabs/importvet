@@ -52,7 +52,7 @@ func run(pass *analysis.Pass) (interface{}, error) {
 
 	if packagePath == "" {
 		// package path wasn't discovered, skip it
-		return nil, nil
+		return nil, nil //nolint:nilnil
 	}
 
 	configs, err := configTree.Match(packagePath)
@@ -93,7 +93,7 @@ func run(pass *analysis.Pass) (interface{}, error) {
 		pass.ExportPackageFact(&fact)
 	}
 
-	return nil, nil
+	return nil, nil //nolint:nilnil
 }
 
 func imported(info *types.Info, spec *ast.ImportSpec) *types.Package {
@@ -102,5 +102,5 @@ func imported(info *types.Info, spec *ast.ImportSpec) *types.Package {
 		obj = info.Defs[spec.Name] // renaming import
 	}
 
-	return obj.(*types.PkgName).Imported()
+	return obj.(*types.PkgName).Imported() //nolint:forcetypeassert
 }

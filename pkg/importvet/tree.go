@@ -61,7 +61,7 @@ func (cfgTree *ConfigTree) Match(path string) ([]*Config, error) {
 	var configs []*Config
 
 	err := cfgTree.configTrie.WalkPath(path, func(key string, value interface{}) error {
-		configs = append(configs, value.(*Config))
+		configs = append(configs, value.(*Config)) //nolint:forcetypeassert
 
 		return nil
 	})
