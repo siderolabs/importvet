@@ -1,6 +1,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED, PLEASE DO NOT EDIT.
 #
-# Generated on 2023-02-15T19:39:18Z by kres latest.
+# Generated on 2023-02-16T11:22:10Z by kres latest.
 
 # common variables
 
@@ -159,8 +159,15 @@ $(ARTIFACTS)/importvet-linux-amd64:
 .PHONY: importvet-linux-amd64
 importvet-linux-amd64: $(ARTIFACTS)/importvet-linux-amd64  ## Builds executable for importvet-linux-amd64.
 
+.PHONY: $(ARTIFACTS)/importvet-linux-arm64
+$(ARTIFACTS)/importvet-linux-arm64:
+	@$(MAKE) local-importvet-linux-arm64 DEST=$(ARTIFACTS)
+
+.PHONY: importvet-linux-arm64
+importvet-linux-arm64: $(ARTIFACTS)/importvet-linux-arm64  ## Builds executable for importvet-linux-arm64.
+
 .PHONY: importvet
-importvet: importvet-linux-amd64  ## Builds executables for importvet.
+importvet: importvet-linux-amd64 importvet-linux-arm64  ## Builds executables for importvet.
 
 .PHONY: lint-markdown
 lint-markdown:  ## Runs markdownlint.

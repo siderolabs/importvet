@@ -2,7 +2,7 @@
 
 # THIS FILE WAS AUTOMATICALLY GENERATED, PLEASE DO NOT EDIT.
 #
-# Generated on 2023-02-15T19:39:18Z by kres latest.
+# Generated on 2023-02-16T11:22:10Z by kres latest.
 
 ARG TOOLCHAIN
 
@@ -64,7 +64,15 @@ COPY --from=generate / /
 WORKDIR /src/cmd/importvet
 ARG GO_BUILDFLAGS
 ARG GO_LDFLAGS
-RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg go build ${GO_BUILDFLAGS} -ldflags "${GO_LDFLAGS}" -o /importvet-linux-amd64
+RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg GOARCH=amd64 GOOS=linux go build ${GO_BUILDFLAGS} -ldflags "${GO_LDFLAGS}" -o /importvet-linux-amd64
+
+# builds importvet-linux-arm64
+FROM base AS importvet-linux-arm64-build
+COPY --from=generate / /
+WORKDIR /src/cmd/importvet
+ARG GO_BUILDFLAGS
+ARG GO_LDFLAGS
+RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg GOARCH=arm64 GOOS=linux go build ${GO_BUILDFLAGS} -ldflags "${GO_LDFLAGS}" -o /importvet-linux-arm64
 
 # runs gofumpt
 FROM base AS lint-gofumpt
@@ -97,6 +105,9 @@ RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/g
 FROM scratch AS importvet-linux-amd64
 COPY --from=importvet-linux-amd64-build /importvet-linux-amd64 /importvet-linux-amd64
 
+FROM scratch AS importvet-linux-arm64
+COPY --from=importvet-linux-arm64-build /importvet-linux-arm64 /importvet-linux-arm64
+
 FROM scratch AS unit-tests
 COPY --from=unit-tests-run /src/coverage.txt /coverage.txt
 
@@ -104,6 +115,7 @@ FROM importvet-linux-${TARGETARCH} AS importvet
 
 FROM scratch AS importvet-all
 COPY --from=importvet-linux-amd64 / /
+COPY --from=importvet-linux-arm64 / /
 
 FROM scratch AS image-importvet
 ARG TARGETARCH
