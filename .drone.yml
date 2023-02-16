@@ -1,7 +1,7 @@
 ---
 # THIS FILE WAS AUTOMATICALLY GENERATED, PLEASE DO NOT EDIT.
 #
-# Generated on 2023-02-15T19:39:18Z by kres latest.
+# Generated on 2023-02-16T11:03:28Z by kres latest.
 
 kind: pipeline
 type: kubernetes
@@ -169,6 +169,7 @@ steps:
       from_secret: ghcr_token
     GHCR_USERNAME:
       from_secret: ghcr_username
+    PLATFORM: linux/amd64,linux/arm64
     PUSH: true
   volumes:
   - name: outer-docker-socket
@@ -185,36 +186,6 @@ steps:
       - pull_request
   depends_on:
   - image-importvet
-
-- name: push-importvet-latest
-  pull: always
-  image: autonomy/build-container:latest
-  commands:
-  - docker login ghcr.io --username "$${GHCR_USERNAME}" --password "$${GHCR_PASSWORD}"
-  - make image-importvet TAG=latest
-  environment:
-    GHCR_PASSWORD:
-      from_secret: ghcr_token
-    GHCR_USERNAME:
-      from_secret: ghcr_username
-    PUSH: true
-  volumes:
-  - name: outer-docker-socket
-    path: /var/outer-run
-  - name: docker-socket
-    path: /var/run
-  - name: buildx
-    path: /root/.docker/buildx
-  - name: ssh
-    path: /root/.ssh
-  when:
-    branch:
-    - master
-    event:
-      exclude:
-      - pull_request
-  depends_on:
-  - push-importvet
 
 - name: release-notes
   pull: always

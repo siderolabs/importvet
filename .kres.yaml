@@ -1,0 +1,7 @@
+---
+kind: common.Image
+name: image-importvet
+spec:
+  pushLatest: false
+  droneExtraEnvironment:
+    PLATFORM: linux/amd64,linux/arm64
