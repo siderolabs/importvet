@@ -11,7 +11,7 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/talos-systems/importvet/pkg/importvet"
+	"github.com/siderolabs/importvet/pkg/importvet"
 )
 
 type TreeSuite struct {

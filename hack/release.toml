@@ -2,7 +2,7 @@
 commit = "HEAD"
 
 project_name = "importvet"
-github_repo = "talos-systems/importvet"
+github_repo = "siderolabs/importvet"
 match_deps = "^github.com/(talos-systems/[a-zA-Z0-9-]+)$"
 
 # previous = -

@@ -9,7 +9,7 @@ import (
 
 	"golang.org/x/tools/go/analysis/analysistest"
 
-	"github.com/talos-systems/importvet/pkg/importvet"
+	"github.com/siderolabs/importvet/pkg/importvet"
 )
 
 func TestIntegration(t *testing.T) {

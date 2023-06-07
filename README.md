@@ -9,7 +9,7 @@ conform with the supplied specification.
 
 Install `importvet`:
 
-    go get github.com/talos-systems/importvet@latest
+    go get github.com/siderolabs/importvet@latest
 
 ## Usage
 
