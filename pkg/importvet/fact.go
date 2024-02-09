@@ -7,7 +7,7 @@ package importvet
 import (
 	"fmt"
 	"go/types"
-	"sort"
+	"slices"
 	"strings"
 
 	"golang.org/x/tools/go/analysis"
@@ -50,7 +50,7 @@ func (fact *importFact) String() string {
 		imports = append(imports, pkg.Path())
 	}
 
-	sort.Strings(imports)
+	slices.Sort(imports)
 
 	return fmt.Sprintf("importFact(%v)", imports)
 }

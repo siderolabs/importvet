@@ -29,8 +29,12 @@ func NewConfigTree(rootPath string) (*ConfigTree, error) {
 		return nil, err
 	}
 
-	if err = filepath.Walk(rootPath, func(path string, info os.FileInfo, err error) error {
-		if info.Mode().IsRegular() && filepath.Base(path) == configFilename {
+	if err = filepath.WalkDir(rootPath, func(path string, info os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if info.Type().IsRegular() && filepath.Base(path) == configFilename {
 			cfg, err := LoadConfig(path)
 			if err != nil {
 				return err
@@ -60,7 +64,7 @@ func NewConfigTree(rootPath string) (*ConfigTree, error) {
 func (cfgTree *ConfigTree) Match(path string) ([]*Config, error) {
 	var configs []*Config
 
-	err := cfgTree.configTrie.WalkPath(path, func(key string, value interface{}) error {
+	err := cfgTree.configTrie.WalkPath(path, func(_ string, value any) error {
 		configs = append(configs, value.(*Config)) //nolint:forcetypeassert
 
 		return nil

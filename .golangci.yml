@@ -1,6 +1,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED, PLEASE DO NOT EDIT.
 #
-# Generated on 2023-09-07T20:28:51Z by kres latest.
+# Generated on 2024-02-09T18:10:43Z by kres b4106a7.
 
 # options for analysis running
 run:
@@ -32,20 +32,13 @@ linters-settings:
     check-blank: true
   exhaustive:
     default-signifies-exhaustive: false
-  funlen:
-    lines: 60
-    statements: 40
   gci:
-    local-prefixes: github.com/siderolabs/importvet/
+    sections:
+      - standard # Standard section: captures all standard packages.
+      - default # Default section: contains all imports that could not be matched to another section type.
+      - prefix(github.com/siderolabs/importvet/) # Custom section: groups all imports with the specified Prefix.
   gocognit:
     min-complexity: 30
-  ireturn:
-    allow:
-      - anon
-      - error
-      - empty
-      - stdlib
-      - github.com\/talos-systems\/kres\/internal\/dag.Node
   nestif:
     min-complexity: 5
   goconst:
@@ -55,27 +48,14 @@ linters-settings:
     disabled-checks: []
   gocyclo:
     min-complexity: 20
-  godot:
-    check-all: false
-  godox:
-    keywords: # default keywords are TODO, BUG, and FIXME, these can be overwritten by this setting
-      - NOTE
-      - OPTIMIZE # marks code that should be optimized before merging
-      - HACK # marks hack-arounds that should be removed before merging
   gofmt:
     simplify: true
   goimports:
     local-prefixes: github.com/siderolabs/importvet/
-  golint:
-    min-confidence: 0.8
-  gomnd:
-    settings: {}
   gomodguard: {}
   govet:
     check-shadowing: true
     enable-all: true
-    disable:
-      - loopclosure
   lll:
     line-length: 200
     tab-width: 4
@@ -90,15 +70,12 @@ linters-settings:
     for-loops: false # Report preallocation suggestions on for loops, false by default
   nolintlint:
     allow-unused: false
-    allow-leading-space: false
     allow-no-explanation: []
     require-explanation: false
     require-specific: true
   rowserrcheck: {}
   testpackage: {}
   unparam:
-    check-exported: false
-  unused:
     check-exported: false
   whitespace:
     multi-if: false   # Enforces newlines (or comments) after every multi-line if statement
@@ -127,29 +104,32 @@ linters:
   disable-all: false
   fast: false
   disable:
-    - exhaustruct
     - exhaustivestruct
+    - exhaustruct
     - forbidigo
     - funlen
-    - gas
     - gochecknoglobals
     - gochecknoinits
     - godox
     - goerr113
     - gomnd
     - gomoddirectives
+    - gosec
+    - inamedparam
     - ireturn
     - nestif
     - nonamedreturns
     - nosnakecase
     - paralleltest
+    - tagalign
     - tagliatelle
     - thelper
-    - typecheck
     - varnamelen
     - wrapcheck
     - depguard # Disabled because starting with golangci-lint 1.53.0 it doesn't allow denylist alone anymore
-    - tagalign
+    - testifylint # complains about our assert recorder and has a number of false positives for assert.Greater(t, thing, 1)
+    - protogetter # complains about us using Value field on typed spec, instead of GetValue which has a different signature
+    - perfsprint # complains about us using fmt.Sprintf in non-performance critical code, updating just kres took too long
     # abandoned linters for which golangci shows the warning that the repo is archived by the owner
     - interfacer
     - maligned

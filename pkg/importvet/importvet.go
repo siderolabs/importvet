@@ -33,7 +33,7 @@ func InitConfig(rootPath string) (err error) {
 	return err
 }
 
-func run(pass *analysis.Pass) (interface{}, error) {
+func run(pass *analysis.Pass) (any, error) {
 	if configTree == nil {
 		return nil, fmt.Errorf("config tree wasn't initialized for importvet")
 	}
